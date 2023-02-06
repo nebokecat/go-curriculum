@@ -11,7 +11,9 @@
 % git clone https://github.com/buysell-technologies/tech-program.git
 % docker-compose up -d
 ```
-http://localhost:8080 でアクセス！
+http://localhost:8080 でアクセス！ graphiQLが表示されればOK！
+<br />
+※ リソースDLに時間がかかるのですぐにアクセスしても表示できない場合があります
 
 ## なにが入ってる？
 
