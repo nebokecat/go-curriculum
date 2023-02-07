@@ -8,7 +8,7 @@
 
 ## How
 ```bash
-% git clone https://github.com/buysell-technologies/tech-program.git
+% git clone https://github.com/[YOUR_GITHUB_USERNAME]/tech-program.git
 % docker-compose up -d
 ```
 http://localhost:8080 でアクセス！ graphiQLが表示されればOK！
