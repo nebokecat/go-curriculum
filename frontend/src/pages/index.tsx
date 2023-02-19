@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 
@@ -11,13 +11,17 @@ export const sampleMutation = gql(/* GraphQL */ `
   }
 `)
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">About</Link>
-    </p>
-  </Layout>
-)
+const IndexPage = () => {
+  const [execute] = useMutation(sampleMutation)
 
+  return (
+    <Layout title="Home | Next.js + TypeScript Example">
+      <h1>Hello Next.js 👋</h1>
+      <p>
+        <Link href="/about">About</Link>
+      </p>
+      <button onClick={() => execute()}>sample</button>
+    </Layout>
+  )
+}
 export default IndexPage
