@@ -1,5 +1,15 @@
+import { gql } from '@apollo/client'
 import Link from 'next/link'
 import Layout from '../components/Layout'
+
+// graphql-code-generatorの動作確認用
+export const sampleMutation = gql(/* GraphQL */ `
+  mutation sample {
+    createTodo(input: {userId: "", text: ""}) {
+      id
+    }
+  }
+`)
 
 const IndexPage = () => (
   <Layout title="Home | Next.js + TypeScript Example">
