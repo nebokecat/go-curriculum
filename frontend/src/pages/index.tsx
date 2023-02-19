@@ -1,4 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
+import Button from '@mui/material/Button'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 
@@ -20,7 +21,7 @@ const IndexPage = () => {
       <p>
         <Link href="/about">About</Link>
       </p>
-      <button onClick={() => execute()}>sample</button>
+      <Button variant='outlined' onClick={() => execute()}>sample</Button>
     </Layout>
   )
 }
