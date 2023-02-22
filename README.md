@@ -14,6 +14,12 @@
 # http://localhost:8080 にアクセスして graphiQL が表示されればOK！ 
 % cd server 
 % docker-compose up -d
+
+# frontend
+# http://localhost:3000 にアクセスして Hello Next.js の画面が表示されればOK！ 
+% cd frontend 
+% yarn install
+% yarn dev
 ```
 ※ リソースDLに時間がかかるのですぐにアクセスしても表示できない場合があります
 
@@ -25,3 +31,12 @@
 - gqlgen
 - gorm
 - gorm/driver/postgres
+
+### frontend
+- Next.js(React)
+- TypeScript
+- React Hook Form
+- zod
+- MUI
+- Apollo Client
+- GraphQL Code Generator
