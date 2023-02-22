@@ -9,14 +9,17 @@
 ## How
 ```bash
 % git clone https://github.com/[YOUR_GITHUB_USERNAME]/tech-program.git
+
+# server
+# http://localhost:8080 にアクセスして graphiQL が表示されればOK！ 
+% cd server 
 % docker-compose up -d
 ```
-http://localhost:8080 でアクセス！ graphiQLが表示されればOK！
-<br />
 ※ リソースDLに時間がかかるのですぐにアクセスしても表示できない場合があります
 
 ## なにが入ってる？
 
+### server
 - go:latest
 - postgreSQL:latest
 - gqlgen
