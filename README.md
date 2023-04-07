@@ -5,6 +5,7 @@
 共通プログラムをすすめるためのベースリポジトリ
 <br />
 基本的には、forkして利用してください
+メンターになった人を[コードオーナー](https://docs.github.com/ja/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)に追加するようにしてください
 
 ## How
 ```bash
