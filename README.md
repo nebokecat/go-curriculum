@@ -1,8 +1,8 @@
-# BST - 共通プログラム
+# BST - 共通カリキュラム
 ## これなに？
-[テクノロジー戦略本部_共通_モノづくりプログラム](https://buysell-tech.atlassian.net/wiki/spaces/TECHNOLOGY/pages/2674262528)
+[テクノロジー戦略本部_共通_モノづくりカリキュラム](https://buysell-tech.atlassian.net/wiki/spaces/TECHNOLOGY/pages/2674262528)
 <br />
-共通プログラムをすすめるためのベースリポジトリ
+共通カリキュラムをすすめるためのベースリポジトリ
 <br />
 基本的には、forkして利用してください
 メンターになった人を[コードオーナー](https://docs.github.com/ja/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)に追加するようにしてください
