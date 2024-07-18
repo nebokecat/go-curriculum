@@ -1,0 +1,15 @@
+output              = "infra/boiler"
+pkgname             = "boiler"
+wipe                = true
+add-global-variants = true
+add-panic-variants  = true
+no-tests            = true
+
+[psql]
+  dbname  = "tech"
+  host    = "db"
+  port    = 5432
+  user    = "tech"
+  pass    = "secret"
+  sslmode = "disable"
+
