@@ -1,4 +1,8 @@
 version: '3'
+networks:
+  tech:
+    external: true
+
 services:
   db:
     image: postgres:latest
@@ -11,6 +15,9 @@ services:
       POSTGRES_DB: tech
     volumes:
       - db-store:/var/lib/postgresql/data
+    networks:
+      - tech
+
   app:
     container_name: app
     build:
@@ -21,5 +28,8 @@ services:
       - '8080:8080'
     volumes:
       - ./app/src:/app
+    networks:
+      - tech
+
 volumes:
   db-store:
