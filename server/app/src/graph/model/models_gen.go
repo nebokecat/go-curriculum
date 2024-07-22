@@ -2,6 +2,20 @@
 
 package model
 
+type CreateTaskInput struct {
+	Name        string  `json:"name"`
+	Description *string `json:"description,omitempty"`
+}
+
+type CreateTaskOutput struct {
+	ID          int     `json:"id"`
+	Name        string  `json:"name"`
+	Description *string `json:"description,omitempty"`
+}
+
+type Mutation struct {
+}
+
 type Query struct {
 }
 

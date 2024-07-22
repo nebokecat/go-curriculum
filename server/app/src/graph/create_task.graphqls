@@ -1,0 +1,16 @@
+input CreateTaskInput {
+  name: String!
+  description: String
+}
+
+type CreateTaskOutput {
+  id: Int!
+  name: String!
+  description: String
+}
+
+extend type Mutation {
+  createTask(
+    input: CreateTaskInput!
+  ): CreateTaskOutput!
+}

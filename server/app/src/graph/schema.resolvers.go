@@ -7,12 +7,17 @@ package graph
 import (
 	"bst-tech/program/graph/model"
 	"context"
-	"fmt"
 )
 
 // Tasks is the resolver for the tasks field.
 func (r *queryResolver) Tasks(ctx context.Context) ([]*model.Task, error) {
-	panic(fmt.Errorf("not implemented: Tasks - tasks"))
+	return []*model.Task{
+			{
+				ID:   "1",
+				Name: "aaa",
+			},
+		},
+		nil
 }
 
 // Query returns QueryResolver implementation.
