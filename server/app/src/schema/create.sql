@@ -1,15 +1,9 @@
--- public.tasks definition
-
--- Drop table
-
--- DROP TABLE public.tasks;
-
 CREATE TABLE public.tasks (
-	"name" varchar NULL,
-	start_date date NULL,
-	end_date date NULL,
-	priority int4 NULL,
-	id int8 NOT NULL,
+	id int8 GENERATED ALWAYS AS IDENTITY NOT NULL,
+	"name" varchar NOT NULL,
 	description varchar NULL,
+	start_date date NULL,
+	end_date varchar NULL,
+	priority int4 NULL,
 	CONSTRAINT tasks_pk PRIMARY KEY (id)
 );

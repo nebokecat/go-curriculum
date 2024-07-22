@@ -19,7 +19,7 @@ import (
 func (r *mutationResolver) CreateTask(ctx context.Context, input model.CreateTaskInput) (*model.CreateTaskOutput, error) {
 	// 引数取得
 	name := input.Name
-	descrption := input.Description
+	description := input.Description
 
 	db, err := sql.Open("postgres", "host=postgres user=tech password=secret dbname=tech sslmode=disable")
 	if err != nil {
@@ -28,8 +28,8 @@ func (r *mutationResolver) CreateTask(ctx context.Context, input model.CreateTas
 
 	// boiler介してtasksにinsertする
 	task := boiler.Task{
-		Name:        null.StringFrom(name),
-		Description: null.StringFromPtr(descrption),
+		Name:        name,
+		Description: null.StringFromPtr(description),
 	}
 	err = task.Insert(ctx, db, boil.Infer())
 	if err != nil {
@@ -38,7 +38,7 @@ func (r *mutationResolver) CreateTask(ctx context.Context, input model.CreateTas
 
 	return &model.CreateTaskOutput{
 		ID:          int(task.ID),
-		Name:        task.Name.String,
+		Name:        task.Name,
 		Description: task.Description.Ptr(),
 	}, nil
 }

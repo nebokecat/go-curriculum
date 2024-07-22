@@ -24,50 +24,96 @@ import (
 
 // Task is an object representing the database table.
 type Task struct {
-	Name        null.String `boil:"name" json:"name,omitempty" toml:"name" yaml:"name,omitempty"`
-	StartDate   null.Time   `boil:"start_date" json:"start_date,omitempty" toml:"start_date" yaml:"start_date,omitempty"`
-	EndDate     null.Time   `boil:"end_date" json:"end_date,omitempty" toml:"end_date" yaml:"end_date,omitempty"`
-	Priority    null.Int    `boil:"priority" json:"priority,omitempty" toml:"priority" yaml:"priority,omitempty"`
 	ID          int64       `boil:"id" json:"id" toml:"id" yaml:"id"`
+	Name        string      `boil:"name" json:"name" toml:"name" yaml:"name"`
 	Description null.String `boil:"description" json:"description,omitempty" toml:"description" yaml:"description,omitempty"`
+	StartDate   null.Time   `boil:"start_date" json:"start_date,omitempty" toml:"start_date" yaml:"start_date,omitempty"`
+	EndDate     null.String `boil:"end_date" json:"end_date,omitempty" toml:"end_date" yaml:"end_date,omitempty"`
+	Priority    null.Int    `boil:"priority" json:"priority,omitempty" toml:"priority" yaml:"priority,omitempty"`
 
 	R *taskR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L taskL  `boil:"-" json:"-" toml:"-" yaml:"-"`
 }
 
 var TaskColumns = struct {
+	ID          string
 	Name        string
+	Description string
 	StartDate   string
 	EndDate     string
 	Priority    string
-	ID          string
-	Description string
 }{
+	ID:          "id",
 	Name:        "name",
+	Description: "description",
 	StartDate:   "start_date",
 	EndDate:     "end_date",
 	Priority:    "priority",
-	ID:          "id",
-	Description: "description",
 }
 
 var TaskTableColumns = struct {
+	ID          string
 	Name        string
+	Description string
 	StartDate   string
 	EndDate     string
 	Priority    string
-	ID          string
-	Description string
 }{
+	ID:          "tasks.id",
 	Name:        "tasks.name",
+	Description: "tasks.description",
 	StartDate:   "tasks.start_date",
 	EndDate:     "tasks.end_date",
 	Priority:    "tasks.priority",
-	ID:          "tasks.id",
-	Description: "tasks.description",
 }
 
 // Generated where
+
+type whereHelperint64 struct{ field string }
+
+func (w whereHelperint64) EQ(x int64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperint64) NEQ(x int64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperint64) LT(x int64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperint64) LTE(x int64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperint64) GT(x int64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperint64) GTE(x int64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperint64) IN(slice []int64) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
+}
+func (w whereHelperint64) NIN(slice []int64) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
+}
+
+type whereHelperstring struct{ field string }
+
+func (w whereHelperstring) EQ(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
+func (w whereHelperstring) NEQ(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
+func (w whereHelperstring) LT(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
+func (w whereHelperstring) LTE(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
+func (w whereHelperstring) GT(x string) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
+func (w whereHelperstring) GTE(x string) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
+func (w whereHelperstring) IN(slice []string) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
+}
+func (w whereHelperstring) NIN(slice []string) qm.QueryMod {
+	values := make([]interface{}, 0, len(slice))
+	for _, value := range slice {
+		values = append(values, value)
+	}
+	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
+}
 
 type whereHelpernull_String struct{ field string }
 
@@ -141,43 +187,20 @@ func (w whereHelpernull_Int) GTE(x null.Int) qm.QueryMod {
 func (w whereHelpernull_Int) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
 func (w whereHelpernull_Int) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
 
-type whereHelperint64 struct{ field string }
-
-func (w whereHelperint64) EQ(x int64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.EQ, x) }
-func (w whereHelperint64) NEQ(x int64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.NEQ, x) }
-func (w whereHelperint64) LT(x int64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.LT, x) }
-func (w whereHelperint64) LTE(x int64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.LTE, x) }
-func (w whereHelperint64) GT(x int64) qm.QueryMod  { return qmhelper.Where(w.field, qmhelper.GT, x) }
-func (w whereHelperint64) GTE(x int64) qm.QueryMod { return qmhelper.Where(w.field, qmhelper.GTE, x) }
-func (w whereHelperint64) IN(slice []int64) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereIn(fmt.Sprintf("%s IN ?", w.field), values...)
-}
-func (w whereHelperint64) NIN(slice []int64) qm.QueryMod {
-	values := make([]interface{}, 0, len(slice))
-	for _, value := range slice {
-		values = append(values, value)
-	}
-	return qm.WhereNotIn(fmt.Sprintf("%s NOT IN ?", w.field), values...)
-}
-
 var TaskWhere = struct {
-	Name        whereHelpernull_String
-	StartDate   whereHelpernull_Time
-	EndDate     whereHelpernull_Time
-	Priority    whereHelpernull_Int
 	ID          whereHelperint64
+	Name        whereHelperstring
 	Description whereHelpernull_String
+	StartDate   whereHelpernull_Time
+	EndDate     whereHelpernull_String
+	Priority    whereHelpernull_Int
 }{
-	Name:        whereHelpernull_String{field: "\"tasks\".\"name\""},
-	StartDate:   whereHelpernull_Time{field: "\"tasks\".\"start_date\""},
-	EndDate:     whereHelpernull_Time{field: "\"tasks\".\"end_date\""},
-	Priority:    whereHelpernull_Int{field: "\"tasks\".\"priority\""},
 	ID:          whereHelperint64{field: "\"tasks\".\"id\""},
+	Name:        whereHelperstring{field: "\"tasks\".\"name\""},
 	Description: whereHelpernull_String{field: "\"tasks\".\"description\""},
+	StartDate:   whereHelpernull_Time{field: "\"tasks\".\"start_date\""},
+	EndDate:     whereHelpernull_String{field: "\"tasks\".\"end_date\""},
+	Priority:    whereHelpernull_Int{field: "\"tasks\".\"priority\""},
 }
 
 // TaskRels is where relationship names are stored.
@@ -197,11 +220,11 @@ func (*taskR) NewStruct() *taskR {
 type taskL struct{}
 
 var (
-	taskAllColumns            = []string{"name", "start_date", "end_date", "priority", "id", "description"}
-	taskColumnsWithoutDefault = []string{"id"}
-	taskColumnsWithDefault    = []string{"name", "start_date", "end_date", "priority", "description"}
+	taskAllColumns            = []string{"id", "name", "description", "start_date", "end_date", "priority"}
+	taskColumnsWithoutDefault = []string{"name"}
+	taskColumnsWithDefault    = []string{"id", "description", "start_date", "end_date", "priority"}
 	taskPrimaryKeyColumns     = []string{"id"}
-	taskGeneratedColumns      = []string{}
+	taskGeneratedColumns      = []string{"id"}
 )
 
 type (
@@ -696,6 +719,7 @@ func (o *Task) Insert(ctx context.Context, exec boil.ContextExecutor, columns bo
 			taskColumnsWithoutDefault,
 			nzDefaults,
 		)
+		wl = strmangle.SetComplement(wl, taskGeneratedColumns)
 
 		cache.valueMapping, err = queries.BindMapping(taskType, taskMapping, wl)
 		if err != nil {
@@ -794,6 +818,7 @@ func (o *Task) Update(ctx context.Context, exec boil.ContextExecutor, columns bo
 			taskAllColumns,
 			taskPrimaryKeyColumns,
 		)
+		wl = strmangle.SetComplement(wl, taskGeneratedColumns)
 
 		if !columns.IsWhitelist() {
 			wl = strmangle.SetComplement(wl, []string{"created_at"})
@@ -1033,6 +1058,9 @@ func (o *Task) Upsert(ctx context.Context, exec boil.ContextExecutor, updateOnCo
 			taskAllColumns,
 			taskPrimaryKeyColumns,
 		)
+
+		insert = strmangle.SetComplement(insert, taskGeneratedColumns)
+		update = strmangle.SetComplement(update, taskGeneratedColumns)
 
 		if updateOnConflict && len(update) == 0 {
 			return errors.New("boiler: unable to upsert tasks, could not build update column list")
