@@ -155,7 +155,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	rc := graphql.GetOperationContext(ctx)
 	ec := executionContext{rc, e, 0, 0, make(chan graphql.DeferredResult)}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
-		ec.unmarshalInputcreateTaskInput,
+		ec.unmarshalInputCreateTaskInput,
 	)
 	first := true
 
@@ -279,7 +279,7 @@ func (ec *executionContext) field_Mutation_createTask_args(ctx context.Context, 
 	var arg0 model.CreateTaskInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNcreateTaskInput2bstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskInput(ctx, tmp)
+		arg0, err = ec.unmarshalNCreateTaskInput2bstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2573,7 +2573,7 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(_ context.Context
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputcreateTaskInput(ctx context.Context, obj interface{}) (model.CreateTaskInput, error) {
+func (ec *executionContext) unmarshalInputCreateTaskInput(ctx context.Context, obj interface{}) (model.CreateTaskInput, error) {
 	var it model.CreateTaskInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
@@ -3174,6 +3174,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
+func (ec *executionContext) unmarshalNCreateTaskInput2bstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskInput(ctx context.Context, v interface{}) (model.CreateTaskInput, error) {
+	res, err := ec.unmarshalInputCreateTaskInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalNCreateTaskOutput2bstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskOutput(ctx context.Context, sel ast.SelectionSet, v model.CreateTaskOutput) graphql.Marshaler {
 	return ec._CreateTaskOutput(ctx, sel, &v)
 }
@@ -3538,11 +3543,6 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) unmarshalNcreateTaskInput2bstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskInput(ctx context.Context, v interface{}) (model.CreateTaskInput, error) {
-	res, err := ec.unmarshalInputcreateTaskInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v interface{}) (bool, error) {

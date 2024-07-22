@@ -1,4 +1,4 @@
-input createTaskInput {
+input CreateTaskInput {
   id: Int!
   name: String!
   description: String
@@ -12,6 +12,6 @@ type CreateTaskOutput {
 
 extend type Mutation {
   createTask(
-    input: createTaskInput!
+    input: CreateTaskInput!
   ): CreateTaskOutput!
 }
