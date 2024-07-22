@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.21.3-bullseye
 
 ENV APP_ROOT /app
 WORKDIR $APP_ROOT
