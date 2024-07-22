@@ -10,9 +10,9 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/volatiletech/null/v8"
-	"github.com/volatiletech/sqlboiler/v4/boil"
 	_ "github.com/lib/pq"
+	null "github.com/volatiletech/null/v8"
+	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 
 // CreateTask is the resolver for the createTask field.
@@ -20,32 +20,27 @@ func (r *mutationResolver) CreateTask(ctx context.Context, input model.CreateTas
 	// 引数取得
 	name := input.Name
 	descrption := input.Description
-	
-	db, err := sql.Open("postgres", "dbname=tech user=tech port=5432 host=127.0.0.1 sslmode=disable")
-	if err != nil{
-		return nil,err
+
+	db, err := sql.Open("postgres", "host=postgres user=tech password=secret dbname=tech sslmode=disable")
+	if err != nil {
+		return nil, err
 	}
-	
+
 	// boiler介してtasksにinsertする
 	task := boiler.Task{
-		Name: null.StringFrom(name),
+		Name:        null.StringFrom(name),
 		Description: null.StringFromPtr(descrption),
 	}
 	err = task.Insert(ctx, db, boil.Infer())
-	if err != nil{
-		return nil,err
+	if err != nil {
+		return nil, err
 	}
-	
-	// id,name,description→boilerから返ってきたやつを
-	
-	// id := 
-	
+
 	return &model.CreateTaskOutput{
-		ID: int(task.ID),
-		Name: task.Name.String,
+		ID:          int(task.ID),
+		Name:        task.Name.String,
 		Description: task.Description.Ptr(),
-	},nil
-	
+	}, nil
 }
 
 // Mutation returns MutationResolver implementation.
