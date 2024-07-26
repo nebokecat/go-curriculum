@@ -29,6 +29,6 @@ func (r *queryResolver) GetTask(ctx context.Context, taskID int) (*graph.GetTask
 		ID:          int(task.ID),
 		Name:        task.Name,
 		Description: task.Description.Ptr(),
-		Priority: task.Priority.Ptr(),
+		Priority:    task.Priority.Ptr(),
 	}, nil
 }
