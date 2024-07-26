@@ -20,28 +20,27 @@ func (r *mutationResolver) UpdateTask(ctx context.Context, input graph.UpdateTas
 		return nil, err
 	}
 
-
-		// Find a pilot and update his name
+	// Find a pilot and update his name
 	task, err := boiler.FindTask(ctx, db, int64(input.ID))
 	if err != nil {
 		return nil, err
 	}
-	
+
 	task.Name = *input.Name
-	
+
 	rowsAff, err := task.Update(ctx, db, boil.Infer())
 	if err != nil {
 		return nil, err
 	}
-	
+
 	task, err = boiler.FindTask(ctx, db, int64(rowsAff))
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return &graph.UpdateTaskOutput{
-		ID: int(task.ID),
-		Name: &task.Name,
+		ID:          int(task.ID),
+		Name:        &task.Name,
 		Description: task.Description.Ptr(),
-	},nil
+	}, nil
 }

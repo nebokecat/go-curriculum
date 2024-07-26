@@ -37,12 +37,12 @@ type Task struct {
 
 type UpdateTaskInput struct {
 	ID          int     `json:"id"`
-	Name        *string `json:"name,omitempty"`
+	Name        string  `json:"name"`
 	Description *string `json:"description,omitempty"`
 }
 
 type UpdateTaskOutput struct {
 	ID          int     `json:"id"`
-	Name        *string `json:"name,omitempty"`
+	Name        string  `json:"name"`
 	Description *string `json:"description,omitempty"`
 }

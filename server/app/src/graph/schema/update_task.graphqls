@@ -1,12 +1,12 @@
 input UpdateTaskInput {
   id: Int!
-  name: String
+  name: String!
   description: String
 }
 
 type UpdateTaskOutput {
   id: Int!
-  name: String
+  name: String!
   description: String
 }
 
