@@ -26,7 +26,7 @@ func (r *mutationResolver) UpdateTask(ctx context.Context, input graph.UpdateTas
 		return nil, err
 	}
 
-	task.Name = *input.Name
+	task.Name = input.Name
 
 	rowsAff, err := task.Update(ctx, db, boil.Infer())
 	if err != nil {
@@ -40,7 +40,7 @@ func (r *mutationResolver) UpdateTask(ctx context.Context, input graph.UpdateTas
 
 	return &graph.UpdateTaskOutput{
 		ID:          int(task.ID),
-		Name:        &task.Name,
+		Name:        task.Name,
 		Description: task.Description.Ptr(),
 	}, nil
 }
