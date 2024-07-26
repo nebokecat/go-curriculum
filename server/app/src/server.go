@@ -2,6 +2,7 @@ package main
 
 import (
 	"bst-tech/program/graph"
+	"bst-tech/program/graph/resolver"
 	"log"
 	"net/http"
 	"os"
@@ -20,7 +21,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &resolver.Resolver{}}))
 
 	mux.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	mux.Handle("/query", srv)
