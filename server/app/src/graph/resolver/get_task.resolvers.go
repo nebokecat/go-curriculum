@@ -9,12 +9,26 @@ import (
 	"bst-tech/program/infra/boiler"
 	"context"
 	"database/sql"
-	"fmt"
 
 	_ "github.com/lib/pq"
 )
 
 // GetTask is the resolver for the getTask field.
 func (r *queryResolver) GetTask(ctx context.Context, taskID int) (*graph.GetTaskOutput, error) {
-	panic(fmt.Errorf("not implemented:  GetTask - getTask"))
+	db, err := sql.Open("postgres", "host=postgres user=tech password=secret dbname=tech sslmode=disable")
+	if err != nil {
+		return nil, err
+	}
+
+	task, err := boiler.Tasks(boiler.TaskWhere.ID.EQ(int64(taskID))).One(ctx, db)
+	if err != nil {
+		return nil, err
+	}
+
+	return &graph.GetTaskOutput{
+		ID:          int(task.ID),
+		Name:        task.Name,
+		Description: task.Description.Ptr(),
+		Priority: task.Priority.Ptr(),
+	}, nil
 }
