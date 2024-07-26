@@ -3,7 +3,6 @@
 package graph
 
 import (
-	"bst-tech/program/graph/model"
 	"bytes"
 	"context"
 	"embed"
@@ -54,7 +53,7 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateTask func(childComplexity int, input model.CreateTaskInput) int
+		CreateTask func(childComplexity int, input CreateTaskInput) int
 	}
 
 	Query struct {
@@ -68,10 +67,10 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	CreateTask(ctx context.Context, input model.CreateTaskInput) (*model.CreateTaskOutput, error)
+	CreateTask(ctx context.Context, input CreateTaskInput) (*CreateTaskOutput, error)
 }
 type QueryResolver interface {
-	Tasks(ctx context.Context) ([]*model.Task, error)
+	Tasks(ctx context.Context) ([]*Task, error)
 }
 
 type executableSchema struct {
@@ -124,7 +123,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateTask(childComplexity, args["input"].(model.CreateTaskInput)), true
+		return e.complexity.Mutation.CreateTask(childComplexity, args["input"].(CreateTaskInput)), true
 
 	case "Query.tasks":
 		if e.complexity.Query.Tasks == nil {
@@ -252,7 +251,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 	return introspection.WrapTypeFromDef(ec.Schema(), ec.Schema().Types[name]), nil
 }
 
-//go:embed "create_task.graphqls" "schema.graphqls"
+//go:embed "schema/create_task.graphqls" "schema/schema.graphqls"
 var sourcesFS embed.FS
 
 func sourceData(filename string) string {
@@ -264,8 +263,8 @@ func sourceData(filename string) string {
 }
 
 var sources = []*ast.Source{
-	{Name: "create_task.graphqls", Input: sourceData("create_task.graphqls"), BuiltIn: false},
-	{Name: "schema.graphqls", Input: sourceData("schema.graphqls"), BuiltIn: false},
+	{Name: "schema/create_task.graphqls", Input: sourceData("schema/create_task.graphqls"), BuiltIn: false},
+	{Name: "schema/schema.graphqls", Input: sourceData("schema/schema.graphqls"), BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
@@ -276,10 +275,10 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 func (ec *executionContext) field_Mutation_createTask_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.CreateTaskInput
+	var arg0 CreateTaskInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNCreateTaskInput2bstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskInput(ctx, tmp)
+		arg0, err = ec.unmarshalNCreateTaskInput2bstᚑtechᚋprogramᚋgraphᚐCreateTaskInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -341,7 +340,7 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _CreateTaskOutput_id(ctx context.Context, field graphql.CollectedField, obj *model.CreateTaskOutput) (ret graphql.Marshaler) {
+func (ec *executionContext) _CreateTaskOutput_id(ctx context.Context, field graphql.CollectedField, obj *CreateTaskOutput) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_CreateTaskOutput_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -385,7 +384,7 @@ func (ec *executionContext) fieldContext_CreateTaskOutput_id(_ context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _CreateTaskOutput_name(ctx context.Context, field graphql.CollectedField, obj *model.CreateTaskOutput) (ret graphql.Marshaler) {
+func (ec *executionContext) _CreateTaskOutput_name(ctx context.Context, field graphql.CollectedField, obj *CreateTaskOutput) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_CreateTaskOutput_name(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -429,7 +428,7 @@ func (ec *executionContext) fieldContext_CreateTaskOutput_name(_ context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _CreateTaskOutput_description(ctx context.Context, field graphql.CollectedField, obj *model.CreateTaskOutput) (ret graphql.Marshaler) {
+func (ec *executionContext) _CreateTaskOutput_description(ctx context.Context, field graphql.CollectedField, obj *CreateTaskOutput) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_CreateTaskOutput_description(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -484,7 +483,7 @@ func (ec *executionContext) _Mutation_createTask(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateTask(rctx, fc.Args["input"].(model.CreateTaskInput))
+		return ec.resolvers.Mutation().CreateTask(rctx, fc.Args["input"].(CreateTaskInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -496,9 +495,9 @@ func (ec *executionContext) _Mutation_createTask(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.CreateTaskOutput)
+	res := resTmp.(*CreateTaskOutput)
 	fc.Result = res
-	return ec.marshalNCreateTaskOutput2ᚖbstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskOutput(ctx, field.Selections, res)
+	return ec.marshalNCreateTaskOutput2ᚖbstᚑtechᚋprogramᚋgraphᚐCreateTaskOutput(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createTask(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -559,9 +558,9 @@ func (ec *executionContext) _Query_tasks(ctx context.Context, field graphql.Coll
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Task)
+	res := resTmp.([]*Task)
 	fc.Result = res
-	return ec.marshalNTask2ᚕᚖbstᚑtechᚋprogramᚋgraphᚋmodelᚐTaskᚄ(ctx, field.Selections, res)
+	return ec.marshalNTask2ᚕᚖbstᚑtechᚋprogramᚋgraphᚐTaskᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_tasks(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -712,7 +711,7 @@ func (ec *executionContext) fieldContext_Query___schema(_ context.Context, field
 	return fc, nil
 }
 
-func (ec *executionContext) _Task_id(ctx context.Context, field graphql.CollectedField, obj *model.Task) (ret graphql.Marshaler) {
+func (ec *executionContext) _Task_id(ctx context.Context, field graphql.CollectedField, obj *Task) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Task_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -756,7 +755,7 @@ func (ec *executionContext) fieldContext_Task_id(_ context.Context, field graphq
 	return fc, nil
 }
 
-func (ec *executionContext) _Task_name(ctx context.Context, field graphql.CollectedField, obj *model.Task) (ret graphql.Marshaler) {
+func (ec *executionContext) _Task_name(ctx context.Context, field graphql.CollectedField, obj *Task) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Task_name(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -2573,8 +2572,8 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(_ context.Context
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputCreateTaskInput(ctx context.Context, obj interface{}) (model.CreateTaskInput, error) {
-	var it model.CreateTaskInput
+func (ec *executionContext) unmarshalInputCreateTaskInput(ctx context.Context, obj interface{}) (CreateTaskInput, error) {
+	var it CreateTaskInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -2617,7 +2616,7 @@ func (ec *executionContext) unmarshalInputCreateTaskInput(ctx context.Context, o
 
 var createTaskOutputImplementors = []string{"CreateTaskOutput"}
 
-func (ec *executionContext) _CreateTaskOutput(ctx context.Context, sel ast.SelectionSet, obj *model.CreateTaskOutput) graphql.Marshaler {
+func (ec *executionContext) _CreateTaskOutput(ctx context.Context, sel ast.SelectionSet, obj *CreateTaskOutput) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, createTaskOutputImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -2784,7 +2783,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 
 var taskImplementors = []string{"Task"}
 
-func (ec *executionContext) _Task(ctx context.Context, sel ast.SelectionSet, obj *model.Task) graphql.Marshaler {
+func (ec *executionContext) _Task(ctx context.Context, sel ast.SelectionSet, obj *Task) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, taskImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -3167,16 +3166,16 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNCreateTaskInput2bstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskInput(ctx context.Context, v interface{}) (model.CreateTaskInput, error) {
+func (ec *executionContext) unmarshalNCreateTaskInput2bstᚑtechᚋprogramᚋgraphᚐCreateTaskInput(ctx context.Context, v interface{}) (CreateTaskInput, error) {
 	res, err := ec.unmarshalInputCreateTaskInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCreateTaskOutput2bstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskOutput(ctx context.Context, sel ast.SelectionSet, v model.CreateTaskOutput) graphql.Marshaler {
+func (ec *executionContext) marshalNCreateTaskOutput2bstᚑtechᚋprogramᚋgraphᚐCreateTaskOutput(ctx context.Context, sel ast.SelectionSet, v CreateTaskOutput) graphql.Marshaler {
 	return ec._CreateTaskOutput(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCreateTaskOutput2ᚖbstᚑtechᚋprogramᚋgraphᚋmodelᚐCreateTaskOutput(ctx context.Context, sel ast.SelectionSet, v *model.CreateTaskOutput) graphql.Marshaler {
+func (ec *executionContext) marshalNCreateTaskOutput2ᚖbstᚑtechᚋprogramᚋgraphᚐCreateTaskOutput(ctx context.Context, sel ast.SelectionSet, v *CreateTaskOutput) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -3231,7 +3230,7 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) marshalNTask2ᚕᚖbstᚑtechᚋprogramᚋgraphᚋmodelᚐTaskᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Task) graphql.Marshaler {
+func (ec *executionContext) marshalNTask2ᚕᚖbstᚑtechᚋprogramᚋgraphᚐTaskᚄ(ctx context.Context, sel ast.SelectionSet, v []*Task) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3255,7 +3254,7 @@ func (ec *executionContext) marshalNTask2ᚕᚖbstᚑtechᚋprogramᚋgraphᚋmo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNTask2ᚖbstᚑtechᚋprogramᚋgraphᚋmodelᚐTask(ctx, sel, v[i])
+			ret[i] = ec.marshalNTask2ᚖbstᚑtechᚋprogramᚋgraphᚐTask(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3275,7 +3274,7 @@ func (ec *executionContext) marshalNTask2ᚕᚖbstᚑtechᚋprogramᚋgraphᚋmo
 	return ret
 }
 
-func (ec *executionContext) marshalNTask2ᚖbstᚑtechᚋprogramᚋgraphᚋmodelᚐTask(ctx context.Context, sel ast.SelectionSet, v *model.Task) graphql.Marshaler {
+func (ec *executionContext) marshalNTask2ᚖbstᚑtechᚋprogramᚋgraphᚐTask(ctx context.Context, sel ast.SelectionSet, v *Task) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
