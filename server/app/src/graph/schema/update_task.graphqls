@@ -1,0 +1,17 @@
+input UpdateTaskInput {
+  id: Int!
+  name: String!
+  description: String
+}
+
+type UpdateTaskOutput {
+  id: Int!
+  name: String!
+  description: String
+}
+
+extend type Mutation {
+  updateTask(
+    input: UpdateTaskInput!
+  ): UpdateTaskOutput!
+}
