@@ -28,7 +28,7 @@ type Task struct {
 	Name        string      `boil:"name" json:"name" toml:"name" yaml:"name"`
 	Description null.String `boil:"description" json:"description,omitempty" toml:"description" yaml:"description,omitempty"`
 	StartDate   null.Time   `boil:"start_date" json:"start_date,omitempty" toml:"start_date" yaml:"start_date,omitempty"`
-	EndDate     null.String `boil:"end_date" json:"end_date,omitempty" toml:"end_date" yaml:"end_date,omitempty"`
+	EndDate     null.Time   `boil:"end_date" json:"end_date,omitempty" toml:"end_date" yaml:"end_date,omitempty"`
 	Priority    null.Int    `boil:"priority" json:"priority,omitempty" toml:"priority" yaml:"priority,omitempty"`
 
 	R *taskR `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -192,14 +192,14 @@ var TaskWhere = struct {
 	Name        whereHelperstring
 	Description whereHelpernull_String
 	StartDate   whereHelpernull_Time
-	EndDate     whereHelpernull_String
+	EndDate     whereHelpernull_Time
 	Priority    whereHelpernull_Int
 }{
 	ID:          whereHelperint64{field: "\"tasks\".\"id\""},
 	Name:        whereHelperstring{field: "\"tasks\".\"name\""},
 	Description: whereHelpernull_String{field: "\"tasks\".\"description\""},
 	StartDate:   whereHelpernull_Time{field: "\"tasks\".\"start_date\""},
-	EndDate:     whereHelpernull_String{field: "\"tasks\".\"end_date\""},
+	EndDate:     whereHelpernull_Time{field: "\"tasks\".\"end_date\""},
 	Priority:    whereHelpernull_Int{field: "\"tasks\".\"priority\""},
 }
 

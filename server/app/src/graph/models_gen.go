@@ -23,3 +23,15 @@ type Task struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
 }
+
+type UpdateTaskInput struct {
+	ID          int     `json:"id"`
+	Name        *string `json:"name,omitempty"`
+	Description *string `json:"description,omitempty"`
+}
+
+type UpdateTaskOutput struct {
+	ID          int     `json:"id"`
+	Name        *string `json:"name,omitempty"`
+	Description *string `json:"description,omitempty"`
+}
