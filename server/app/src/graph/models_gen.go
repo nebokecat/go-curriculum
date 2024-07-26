@@ -13,6 +13,17 @@ type CreateTaskOutput struct {
 	Description *string `json:"description,omitempty"`
 }
 
+type GetTaskInput struct {
+	ID int `json:"id"`
+}
+
+type GetTaskOutput struct {
+	ID          int     `json:"id"`
+	Name        string  `json:"name"`
+	Description *string `json:"description,omitempty"`
+	Priority    *int    `json:"priority,omitempty"`
+}
+
 type Mutation struct {
 }
 

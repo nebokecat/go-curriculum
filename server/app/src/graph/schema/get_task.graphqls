@@ -1,0 +1,17 @@
+input GetTaskInput  {
+  id: Int!
+}
+
+type GetTaskOutput{
+  id: Int!
+  name: String!
+  description: String
+  priority: Int
+}
+
+extend type Query {
+  getTask(
+    taskId: Int!
+  ): GetTaskOutput!
+}
+
