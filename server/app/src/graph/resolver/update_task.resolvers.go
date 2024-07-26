@@ -10,6 +10,7 @@ import (
 	"context"
 	"database/sql"
 
+	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 
@@ -27,6 +28,7 @@ func (r *mutationResolver) UpdateTask(ctx context.Context, input graph.UpdateTas
 	}
 
 	task.Name = input.Name
+	task.Description = null.StringFromPtr(input.Description)
 
 	rowsAff, err := task.Update(ctx, db, boil.Infer())
 	if err != nil {
