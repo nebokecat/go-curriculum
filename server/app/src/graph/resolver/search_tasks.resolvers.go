@@ -23,14 +23,14 @@ func (r *queryResolver) SearchTasks(ctx context.Context, input *graph.SearchTask
 
 	var queries []qm.QueryMod
 
-	if input.Name != nil {
-		queries = append(queries, qm.Where("name LIKE ?", fmt.Sprintf("%%s%%", *input.Name)))
-	}
-
-	if input.Description != nil {
+	if input.Name != nil && input.Description != nil {
+		queries = append(queries, qm.Where("name LIKE ? OR description ILIKE ?", fmt.Sprintf("%%%s%%", *input.Name), fmt.Sprintf("%%%s%%", *input.Description)))
+	} else if input.Name != nil {
+		queries = append(queries, qm.Where("name LIKE ?", fmt.Sprintf("%%%s%%", *input.Name)))
+	} else if input.Description != nil {
 		queries = append(queries, qm.Where("description LIKE ?", fmt.Sprintf("%%%s%%", *input.Description)))
 	}
-
+	
 	tasks, err := boiler.Tasks(queries...).All(ctx, db)
 	if err != nil {
 		return nil, err
