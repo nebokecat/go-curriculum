@@ -36,7 +36,7 @@ func (r *queryResolver) SearchTasks(ctx context.Context, input graph.SearchTaskI
 		return nil, err
 	}
 
-	var result []*graph.SearchTask
+	result := make([]*graph.SearchTask, 0, len(tasks))
 	for _, task := range tasks {
 		result = append(result, &graph.SearchTask{
 			ID:          int(task.ID),
