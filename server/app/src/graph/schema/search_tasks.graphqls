@@ -4,7 +4,7 @@ input SearchTaskInput{
 }
 
 type SearchTasksOutput {
-  SearchTasks: [SearchTask!]
+  SearchTasks: [SearchTask!]!
 }
 
 type SearchTask {
@@ -15,5 +15,5 @@ type SearchTask {
 }
 
 extend type Query {
-  searchTasks(input: SearchTaskInput): SearchTasksOutput!
+  searchTasks(input: SearchTaskInput!): SearchTasksOutput!
 }

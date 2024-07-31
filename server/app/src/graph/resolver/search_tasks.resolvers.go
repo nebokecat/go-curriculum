@@ -15,7 +15,7 @@ import (
 )
 
 // SearchTasks is the resolver for the searchTasks field.
-func (r *queryResolver) SearchTasks(ctx context.Context, input *graph.SearchTaskInput) (*graph.SearchTasksOutput, error) {
+func (r *queryResolver) SearchTasks(ctx context.Context, input graph.SearchTaskInput) (*graph.SearchTasksOutput, error) {
 	db, err := sql.Open("postgres", "host=postgres user=tech password=secret dbname=tech sslmode=disable")
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (r *queryResolver) SearchTasks(ctx context.Context, input *graph.SearchTask
 	} else if input.Description != nil {
 		queries = append(queries, qm.Where("description LIKE ?", fmt.Sprintf("%%%s%%", *input.Description)))
 	}
-	
+
 	tasks, err := boiler.Tasks(queries...).All(ctx, db)
 	if err != nil {
 		return nil, err

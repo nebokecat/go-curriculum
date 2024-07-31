@@ -43,7 +43,7 @@ type SearchTaskInput struct {
 }
 
 type SearchTasksOutput struct {
-	SearchTasks []*SearchTask `json:"SearchTasks,omitempty"`
+	SearchTasks []*SearchTask `json:"SearchTasks"`
 }
 
 type Task struct {
