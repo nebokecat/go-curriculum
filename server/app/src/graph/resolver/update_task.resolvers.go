@@ -10,7 +10,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/volatiletech/null/v8"
+	null "github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/boil"
 )
 

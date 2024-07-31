@@ -1,0 +1,19 @@
+input SearchTaskInput{
+  name: String
+  description: String
+}
+
+type SearchTasksOutput {
+  SearchTasks: [SearchTask!]!
+}
+
+type SearchTask {
+  id: Int!
+  name: String!
+  description: String
+  priority: Int
+}
+
+extend type Query {
+  searchTasks(input: SearchTaskInput!): SearchTasksOutput!
+}
